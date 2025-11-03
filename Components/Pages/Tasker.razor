@@ -43,12 +43,23 @@
         await LoadListAsync();
     }
 
+    protected override async  Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // InputTextBox con il focus
+            await textBoxTask!.Element!.Value.FocusAsync();
+        }  
+    }
+
     private async Task addTask()
     {
         ti.Id = Guid.NewGuid();
         taskerItems.Add(ti);
         ti = new();
         await SaveListAsync();
+        // focus
+        await textBoxTask!.Element!.Value.FocusAsync();
     }
 
     private async void deleteTask(TaskerItem item)
